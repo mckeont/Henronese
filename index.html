@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Henronese Translator</title>
+  <style>
+  body {
+       font-family: Arial, sans-serif;
+       text-align: center;
+     }
+
+     #translatedText {
+       width: 100%;
+       max-width: 300px;
+       margin: 10px auto;
+       height: auto;
+       font-size: 16px;
+       overflow-wrap: break-word;
+   }
+
+
+     #audioButtons {
+       display: flex;
+       flex-wrap: wrap;
+       justify-content: center;
+       margin-top: 20px;
+     }
+
+     #audioButtons button {
+       margin: 5px;
+       padding: 5px 10px;
+     }
+
+     #translateButton {
+       margin-top: 20px;
+       background-color: #3498db;
+       color: white;
+       border: none;
+       padding: 10px 20px;
+       font-size: 16px;
+       cursor: pointer;
+     }
+  </style>
+</head>
+<body>
+  <h1>Baby Translator</h1>
+
+  <div id="audioButtons"></div>
+  <button type="button" id="translateButton">Translate</button>
+  <input type="text" id="translatedText" placeholder="English translation..." readonly>
+
+  <script>
+    const translateButton = document.getElementById("translateButton");
+    const translatedTextElement = document.getElementById("translatedText");
+    const audioButtonsContainer = document.getElementById("audioButtons");
+
+    const babySound = new Audio("baby_coo.mp3");
+    babySound.preload = "auto";
+    babySound.addEventListener("loadedmetadata", createAudioButtons);
+
+
+    const segmentLimericks = [
+      "A newborn explores time and space.",
+      "First steps, a wobbly endeavor.",
+      "Blue moon already?",
+      "What's that smell?",
+      "Is that Jade?",
+      "Is that Taffy?",
+      "Abi",
+      "Is a fake noodle? An Impasta!",
+      "A pile of cats? A meowtain!",
+      "Bike fall over? two-tired!",
+    ];
+
+    translateButton.addEventListener("click", translate);
+
+    function translate() {
+      const translatedText = babyTranslate();
+      showTranslatedText(translatedText);
+    }
+
+    function babyTranslate() {
+      const soundIndex = Math.floor(Math.random() * limericks.length);
+      return limericks[soundIndex];
+    }
+
+    function showTranslatedText(text) {
+      translatedTextElement.value = text;
+    }
+
+    function createAudioButtons() {
+      const numSegments = 10;
+      const segmentDuration = babySound.duration / numSegments;
+      audioButtonsContainer.innerHTML = "";
+
+      for (let i = 0; i < numSegments; i++) {
+        const button = document.createElement("button");
+        button.textContent = "Segment " + (i + 1);
+        button.addEventListener("click", () => {
+          playAudioSegment(i, segmentDuration);
+          const segmentLimerick = segmentLimericks[i] || "No limerick available.";
+          showTranslatedText(segmentLimerick);
+        });
+        audioButtonsContainer.appendChild(button);
+      }
+    }
+
+    function playAudioSegment(segmentIndex, duration) {
+      const startTime = segmentIndex * duration;
+      babySound.currentTime = startTime;
+      babySound.play();
+    }
+  </script>
+</body>
+</html>
