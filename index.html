@@ -103,7 +103,7 @@
 
       for (let i = 0; i < numSegments; i++) {
         const button = document.createElement("button");
-        button.textContent = "Segment " + (i + 1);
+        button.textContent = "Music Teaser " + (i + 1);
         button.addEventListener("click", () => {
           playAudioSegment(i, segmentDuration);
           const segmentLimerick = segmentLimericks[i] || "No limerick available.";
