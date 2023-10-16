@@ -1,3 +1,3 @@
 # Henronese
-Baby Translator
+Music Splicer
 https://mckeont.github.io/Henronese/ 
